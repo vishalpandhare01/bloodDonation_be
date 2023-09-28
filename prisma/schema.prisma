@@ -10,7 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model test {
-  id       Int    @id @default(autoincrement())
-  title    String
+model user {
+  id           String  @unique @default(uuid())
+  name         String
+  email        String
+  phone        String
+  password     String
+  blood_type   String
+  address      String
+  profile_pic  String
+  otp          Int     @default(000000)
+  available    Boolean @default(false)
+  donations    Json[]
+  donated      Json[]
+  request_sent Json[]
+  request_get  Json[]
 }
