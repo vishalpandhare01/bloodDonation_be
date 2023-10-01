@@ -5,7 +5,6 @@ import multer from 'multer'
 import cors from 'cors'
 import userRoute from "./route/userRouter/userroute";
 
-
 import route from "./route/route";
 dotenv.config();
 const port = process.env.PORT;
