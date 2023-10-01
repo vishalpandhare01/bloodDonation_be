@@ -98,6 +98,7 @@ export async function registerUser(req: Request, res: Response) {
     });
     return res.status(201).send({ status: true, message: createuser });
   } catch (err: any) {
+    console.log(err)
     return res.status(500).send({ status: false, message: err.message });
   }
 }
