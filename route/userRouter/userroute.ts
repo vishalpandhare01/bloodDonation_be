@@ -16,7 +16,7 @@ userRoute.post("/login", login);
 userRoute.get("/getAlluser", authentication, getAlluser);
 userRoute.put("/updateUser/:userId", authentication,authorization, updateUser);
 userRoute.put("/updatePassword/:userId", authentication, updatePassword);
-userRoute.put("/sendOTP", authentication, sendOTP);
-userRoute.put("/veryfyOTP", authentication, veryfyOTP);
+userRoute.put("/sendOTP", sendOTP);
+userRoute.put("/veryfyOTP", veryfyOTP);
 
 export default userRoute;
