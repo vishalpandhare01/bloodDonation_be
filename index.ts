@@ -1,12 +1,12 @@
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
-import route from "./route/route";
 import multer from 'multer'
 import cors from 'cors'
 import userRoute from "./route/userRouter/userroute";
 
 
+import route from "./route/route";
 dotenv.config();
 const port = process.env.PORT;
 app.use(express.json());

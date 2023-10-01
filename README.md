@@ -17,3 +17,6 @@
 - const prisma = new PrismaClient()
 - export default prisma
 - ==================================================
+- in production 
+- npm install nodemon --save-dev
+- npm install ngrok --save-dev
