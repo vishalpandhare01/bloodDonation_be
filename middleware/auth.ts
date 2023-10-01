@@ -6,7 +6,7 @@ dotenv.config();
 
 const jwtsing = process.env.JWTSIGNATURE as string;
 
-export default function authentication(
+export  function authentication(
   req: Request,
   res: Response,
   next: NextFunction
@@ -37,3 +37,23 @@ export default function authentication(
   }
 }
 
+export  function authorization( req: Request,
+  res: Response,
+  next: NextFunction
+){
+  try{
+    const userId = req.params.userId
+    //@ts-ignore
+    const loginUserId = req.user.id 
+    if(userId === loginUserId){
+      next()
+    }else{
+      return res.status(403).send({status:false,message:'You are not authorized'})
+
+  }
+  }catch(err:any){
+    return res.status(500).send({ status: false, message: err.message });
+
+  }
+
+}

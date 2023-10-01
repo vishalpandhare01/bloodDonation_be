@@ -101,6 +101,7 @@ export async function registerUser(req: Request, res: Response) {
     return res.status(500).send({ status: false, message: err.message });
   }
 }
+
 export async function login(req: Request, res: Response) {
   const { email, phone, password } = req.body;
   try {
@@ -135,6 +136,7 @@ export async function login(req: Request, res: Response) {
     res.status(500).send({ status: false, message: err.message });
   }
 }
+
 export async function getAlluser(req: Request, res: Response) {
   try {
     const getUsers = await prisma.user.findMany();
@@ -145,6 +147,7 @@ export async function getAlluser(req: Request, res: Response) {
     return res.status(500).send({ statu: false, message: err.message });
   }
 }
+
 export async function updateUser(req: Request, res: Response) {
   try {
     let {
@@ -155,15 +158,9 @@ export async function updateUser(req: Request, res: Response) {
       blood_type,
       address,
       profile_pic,
-      userId,
     } = req.body;
 
-    if (!userId) {
-      return res.status(400).send({
-        status: false,
-        message: "userId required",
-      });
-    }
+    let userId = req.params.userId
 
     if (blood_type) {
       let bloodGroup = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
@@ -230,6 +227,7 @@ export async function updateUser(req: Request, res: Response) {
     return res.status(500).send({ status: false, message: err.message });
   }
 }
+
 export async function updatePassword(req: Request, res: Response) {
   try {
     let { password, userId } = req.body;
@@ -252,6 +250,7 @@ export async function updatePassword(req: Request, res: Response) {
     return res.status(500).send({ status: false, message: err.message });
   }
 }
+
 export async function sendOTP(req: Request, res: Response) {
   try {
     const { email } = req.body;
@@ -301,13 +300,14 @@ export async function sendOTP(req: Request, res: Response) {
     return res.status(500).send({ status: false, message: err.message });
   }
 }
+
 export async function veryfyOTP(req: Request, res: Response) {
   try {
-    const { otp, userId } = req.body;
+    const { otp, email } = req.body;
 
     const userData = await prisma.user.findFirst({
       where: {
-        id: userId,
+        email: email,
       },
     });
 
