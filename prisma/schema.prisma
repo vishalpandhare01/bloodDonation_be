@@ -20,7 +20,9 @@ model user {
   address      String
   profile_pic  String
   otp          Int     @default(000000)
+  isVryfiedOtp Boolean @default(false)
   available    Boolean @default(false)
+  diviceToken  String  @default("")
   donations    Json[]
   donated      Json[]
   request_sent Json[]

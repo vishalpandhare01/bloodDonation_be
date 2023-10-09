@@ -98,7 +98,7 @@ export async function registerUser(req: Request, res: Response) {
     });
     return res.status(201).send({ status: true, message: createuser });
   } catch (err: any) {
-    console.log(err)
+    console.log(err);
     return res.status(500).send({ status: false, message: err.message });
   }
 }
@@ -151,17 +151,10 @@ export async function getAlluser(req: Request, res: Response) {
 
 export async function updateUser(req: Request, res: Response) {
   try {
-    let {
-      name,
-      email,
-      phone,
-      password,
-      blood_type,
-      address,
-      profile_pic,
-    } = req.body;
+    let { name, email, phone, password, blood_type, address, profile_pic } =
+      req.body;
 
-    let userId = req.params.userId
+    let userId = req.params.userId;
 
     if (blood_type) {
       let bloodGroup = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
@@ -238,12 +231,24 @@ export async function updatePassword(req: Request, res: Response) {
         .status(400)
         .send({ status: false, message: "please enter strong password" });
 
+    const userData = await prisma.user.findFirst({
+      where: {
+        isVryfiedOtp: true,
+      },
+    });
+
+    if (!userData)
+      return res
+        .status(400)
+        .send({ status: false, message: "Your Otp not veryfied yet" });
+
     const updateuser = await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
         password: password,
+        isVryfiedOtp: false,
       },
     });
     return res.status(200).send({ status: true, message: updateuser });
@@ -305,22 +310,30 @@ export async function sendOTP(req: Request, res: Response) {
 export async function veryfyOTP(req: Request, res: Response) {
   try {
     const { otp, email } = req.body;
-
     const userData = await prisma.user.findFirst({
       where: {
         email: email,
       },
     });
 
-    console.log(otp , userData?.otp)
-    if (otp === userData?.otp) {
-      return res.status(200).send({ status: true, message: "otp veryfied" });
+    // console.log(otp , userData?.otp)
+    if (otp == userData?.otp) {
+      const user = await prisma.user.update({
+        where: {
+          id: userData?.id,
+        },
+        data: {
+          isVryfiedOtp: true,
+        },
+      });
+      return res
+        .status(200)
+        .send({ status: true, userId: userData?.id, message: "otp veryfied" });
     } else {
       return res
         .status(400)
         .send({ status: true, message: "Please Enter Valid OTP" });
     }
-
   } catch (err: any) {
     return res.status(500).send({ status: false, message: err.message });
   }
