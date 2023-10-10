@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import {
   getAlluser,
+  getuserprofile,
   login,
   registerUser,
   sendOTP,
@@ -14,9 +15,12 @@ const userRoute = Router();
 userRoute.post("/userRegister", registerUser);
 userRoute.post("/login", login);
 userRoute.get("/getAlluser", authentication, getAlluser);
+userRoute.get("/getuserprofile", authentication, getuserprofile);
+
 userRoute.put("/updateUser/:userId", authentication,authorization, updateUser);
 userRoute.put("/updatePassword", updatePassword);
 userRoute.put("/sendOTP", sendOTP);
 userRoute.put("/veryfyOTP", veryfyOTP);
+
 
 export default userRoute;

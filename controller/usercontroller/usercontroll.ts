@@ -338,3 +338,19 @@ export async function veryfyOTP(req: Request, res: Response) {
     return res.status(500).send({ status: false, message: err.message });
   }
 }
+
+export async function getuserprofile(req: Request, res: Response) {
+  const userId = req.params.userId
+  try {
+    const getUsers = await prisma.user.findMany({
+      where:{
+        id:userId
+      }
+    });
+    return res
+      .status(200)
+      .send({ statu: true, message: "success", data: getUsers });
+  } catch (err: any) {
+    return res.status(500).send({ statu: false, message: err.message });
+  }
+}
