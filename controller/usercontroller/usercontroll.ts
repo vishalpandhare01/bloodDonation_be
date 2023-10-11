@@ -233,6 +233,7 @@ export async function updatePassword(req: Request, res: Response) {
 
     const userData = await prisma.user.findFirst({
       where: {
+        //@ts-ignore
         isVryfiedOtp: true,
       },
     });
@@ -248,6 +249,7 @@ export async function updatePassword(req: Request, res: Response) {
       },
       data: {
         password: password,
+        //@ts-ignore
         isVryfiedOtp: false,
       },
     });
@@ -340,7 +342,10 @@ export async function veryfyOTP(req: Request, res: Response) {
 }
 
 export async function getuserprofile(req: Request, res: Response) {
-  const userId = req.params.userId
+  //@ts-ignore
+  const userId = req.user.id 
+  console.log(userId)
+  
   try {
     const getUsers = await prisma.user.findMany({
       where:{
