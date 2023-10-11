@@ -371,7 +371,8 @@ export async function availabletoDonate(req: Request, res: Response) {
         id: userId,
       },
     });
-    AllusersNotification(getUsers?.name , getUsers?.id as String)
+    
+    AllusersNotification(`${getUsers?.name} is Available to donate` , getUsers?.id as String)
     //@ts-ignore
     if (getUsers?.available) {
       const updateuser = await prisma.user.update({
