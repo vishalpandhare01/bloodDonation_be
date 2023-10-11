@@ -154,7 +154,8 @@ export async function updateUser(req: Request, res: Response) {
     let { name, email, phone, password, blood_type, address, profile_pic } =
       req.body;
 
-    let userId = req.params.userId;
+    //@ts-ignore
+    const userId = req.user.id;
 
     if (blood_type) {
       let bloodGroup = ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"];
@@ -343,19 +344,69 @@ export async function veryfyOTP(req: Request, res: Response) {
 
 export async function getuserprofile(req: Request, res: Response) {
   //@ts-ignore
-  const userId = req.user.id 
-  console.log(userId)
-  
+  const userId = req.user.id;
+  console.log(userId);
+
   try {
-    const getUsers = await prisma.user.findMany({
-      where:{
-        id:userId
-      }
+    const getUsers = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
     });
     return res
       .status(200)
       .send({ statu: true, message: "success", data: getUsers });
   } catch (err: any) {
     return res.status(500).send({ statu: false, message: err.message });
+  }
+}
+
+export async function availabletoDonate(req: Request, res: Response) {
+  //@ts-ignore
+  const userId = req.user.id;
+  try {
+    const getUsers = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    console.log(getUsers)
+
+    
+    //@ts-ignore
+    if (getUsers?.available) {
+      const updateuser = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          available: false,
+        },
+      });
+      return res.status(200).send({
+        statu: true,
+        message: "success",
+        data: "Not Availble to donate",
+      });
+    }else{
+      const updateuser = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          available: true,
+        },
+      });
+  
+      return res.status(200).send({
+        statu: true,
+        message: "success",
+        data: "Availble to donate",
+      });
+    }
+
+
+  } catch (err: any) {
+    return res.status(500).send({ status: false, message: err.message });
   }
 }

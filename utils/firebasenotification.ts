@@ -1,3 +1,5 @@
+import { configDotenv } from "dotenv";
+configDotenv()
 import axios from "axios";
 
 export async function Notification(
@@ -22,7 +24,7 @@ export async function Notification(
 
   const headers = {
     Authorization:
-      "key = AAAAlHRE6HY:APA91bED8VyeZJbQ0-K7zMeClks1xJwrkPm_6eR-GYAzbOFo0RRFhii7J-tOrzN9UOAJhcgjTOW7rEA_ad9-ICkXw1VGipKSNAhVgD7coFpaOtcGhdqW26k1IKk1Nx-_O_9rylR4zvuK",
+      process.env.FIREBASEKEY,
   };
 
   await axios
@@ -58,7 +60,7 @@ export async function MultypleNotification(
 
   const headers = {
     Authorization:
-      "key = AAAAlHRE6HY:APA91bED8VyeZJbQ0-K7zMeClks1xJwrkPm_6eR-GYAzbOFo0RRFhii7J-tOrzN9UOAJhcgjTOW7rEA_ad9-ICkXw1VGipKSNAhVgD7coFpaOtcGhdqW26k1IKk1Nx-_O_9rylR4zvuK",
+    process.env.FIREBASEKEY,
   };
 
   await axios
@@ -92,7 +94,7 @@ export async function AllusersNotification(
 
   const headers = {
     Authorization:
-      "key = AAAAlHRE6HY:APA91bED8VyeZJbQ0-K7zMeClks1xJwrkPm_6eR-GYAzbOFo0RRFhii7J-tOrzN9UOAJhcgjTOW7rEA_ad9-ICkXw1VGipKSNAhVgD7coFpaOtcGhdqW26k1IKk1Nx-_O_9rylR4zvuK",
+    process.env.FIREBASEKEY,
   };
 
   await axios
