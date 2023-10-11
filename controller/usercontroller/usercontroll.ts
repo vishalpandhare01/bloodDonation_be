@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { sentOTPEmail } from "../../utils/sentotpmail";
+import { AllusersNotification } from "../../utils/firebasenotification";
 dotenv.config();
 
 const jwtsing = process.env.JWTSIGNATURE as string;
@@ -370,9 +371,7 @@ export async function availabletoDonate(req: Request, res: Response) {
         id: userId,
       },
     });
-    console.log(getUsers)
-
-    
+    AllusersNotification(getUsers?.name , getUsers?.id as String)
     //@ts-ignore
     if (getUsers?.available) {
       const updateuser = await prisma.user.update({

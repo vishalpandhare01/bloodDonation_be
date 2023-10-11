@@ -75,7 +75,7 @@ export async function MultypleNotification(
 
 export async function AllusersNotification(
   message: String | undefined /*, title :String | undefined */,
-  postId: String
+  userId: String
 ) {
   const data = {
     to: "/topics/All",
@@ -88,7 +88,7 @@ export async function AllusersNotification(
       title: "Blood Donation",
     },
     data: {
-      id: `${postId}`,
+      id: `${userId}`,
     },
   };
 
